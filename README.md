@@ -1,6 +1,6 @@
 # Pizza Shop
 
-Pizza ordering service using Django, PostgreSQL hosted in the could on Heroku
+Pizza ordering service using Django and PostgreSQL which is hosted in the cloud on Heroku
 
 ## About
 
