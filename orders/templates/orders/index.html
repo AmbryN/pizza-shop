@@ -1,0 +1,45 @@
+{% extends "orders/layout.html" %}
+
+{% block title %}Menu{% endblock %}
+
+{% block body %}
+    <header>
+        <div class="row">
+            <div class="col s12">
+                {% load static %}
+                <img src="{% static 'orders/pizza-oven.jpg' %}" alt="pizza oven">
+            </div>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col s12 center-align">
+            <h3>Our Pizzas</h3>
+        </div>
+    </div>
+    
+    <div class="divider"></div>
+            
+    <div class="row">
+        {% for pizza in pizzas %}
+            <div class="col s12 m4">
+                <div class="card">
+                <div class="card-image">
+                    {% load static %}
+                    {% static "" as baseUrl %}
+                    <img src="{{ baseUrl }}{{ pizza.image_link }}">
+                    <a class="btn-floating halfway-fab waves-effect waves-light green accent-3"><i class="material-icons">add</i></a>
+                </div>
+                <div class="card-content">
+                    <span class="card-title">{{ pizza.name }}</span>
+                    <p>{{ pizza.description }}</p>
+                    <p>Price: {{ pizza.price }} €</p>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+            
+        
+    
+{% endblock %}
