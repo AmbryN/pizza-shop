@@ -15,7 +15,7 @@
 </head>
 <body>
     <nav class="nav-wrapper red darken-4">
-        <a class="brand-logo" href="{% url 'index' %}">Pizza shop</a>
+        <a class="brand-logo valign-wrapper" href="{% url 'index' %}">Pizza shop</a>
         <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 {% if user.is_authenticated %}
@@ -37,6 +37,9 @@
                     <a href="{% url 'logout' %}">Logout</a>
                 </li>
                 {% else %}
+                <li>
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
                 <li>
                     <a href="{% url 'register' %}">Register</a>
                 </li>

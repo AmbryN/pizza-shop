@@ -59,10 +59,15 @@ def order_cart(request):
     return redirect('cart')
 
 # Allows user to browse their cart
-@login_required(login_url="login")
 @require_http_methods(['GET', 'POST'])
 def cart(request):
     # Get the user's cart, if it doesn't exist, create it
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            return JsonResponse({"message": "auth"})
+        else:
+            return render(request, "orders/cart.html", context)
+
     try:
         cart = Cart.objects.filter(user=request.user).get(is_ordered=False)
     except Cart.DoesNotExist:
@@ -87,7 +92,6 @@ def cart(request):
         return render(request, "orders/cart.html", context)
 
 # View the menu
-@login_required(login_url="login")
 @ensure_csrf_cookie
 def index(request):
     # Get pizza
@@ -115,7 +119,7 @@ def login_user(request):
 # Allows user to logout
 def logout_user(request):
     logout(request)
-    return render(request, "orders/login.html")
+    return redirect('index')
 
 # Allows users to browse their last orders
 @login_required(login_url="login")
