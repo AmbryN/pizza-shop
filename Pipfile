@@ -7,6 +7,7 @@ name = "pypi"
 "psycopg2" = "*"
 Django = "==2.0.8"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
