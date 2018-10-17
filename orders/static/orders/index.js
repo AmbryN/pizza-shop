@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     addBtns.forEach(button => {
         button.addEventListener('click', async () => {
             await addToCart(button.dataset.id);
-            let modal = document.getElementById("modal1");
-            let instance = M.Modal.getInstance(modal);
-            instance.open();
         })
     });
 
@@ -24,15 +21,29 @@ async function addToCart(pizza_id) {
     req.setRequestHeader('X-CSRFToken', csrfToken);
     req.onload = () => {
         let message = "";
+        let buttonText = "GO TO KART";
+        let btnHref = "/cart";
         if (req.status == 200){
             let data = req.responseText;
             let state = JSON.parse(data)['message'];
-            message = "Your pizza has been added to your cart successfuly!"; 
+            if (state == 'auth') {
+                buttonText = "LOGIN"
+                btnHref = "/login"
+                message = "Please login to add pizzas to your cart"
+            }
+            else message = "Your pizza has been added to your cart successfuly!"; 
         } 
         else {
             message = "There has been a problem while adding the pizza to your cart. Please try again.";
         }
         document.getElementById('add-result').innerText = message;
+        actionBtn = document.getElementById('modal-action');
+        actionBtn.innerText = buttonText;
+        actionBtn.href = btnHref;
+
+        let modal = document.getElementById("modal1");
+        let instance = M.Modal.getInstance(modal);
+        instance.open();
     };
     
     data = new FormData();
