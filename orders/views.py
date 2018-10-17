@@ -1,6 +1,6 @@
 from datetime import datetime, date, time
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponseForbidden
 from django.urls import reverse
@@ -60,6 +60,7 @@ def order_cart(request):
 
 # Allows user to browse their cart
 @require_http_methods(['GET', 'POST'])
+@ensure_csrf_cookie
 def cart(request):
     # Get the user's cart, if it doesn't exist, create it
     if not request.user.is_authenticated:
@@ -90,6 +91,13 @@ def cart(request):
             "cart_total": cart_total
         }
         return render(request, "orders/cart.html", context)
+
+@require_http_methods(['POST'])
+@login_required(login_url="login")
+def update_cart_quantity(request, cart_line_id):
+    cart_line = Cart_line.objects.get(id=cart_line_id)
+    cart_line.updateQuantityTo(request.POST['quantity'])
+    return JsonResponse({"url": '/cart'})
 
 # View the menu
 @ensure_csrf_cookie

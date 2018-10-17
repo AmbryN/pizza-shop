@@ -29,7 +29,7 @@
                             <td>{{ line.pizza.name }}</td>
                             <td>
                                 <div class="input-field col s12">
-                                    <select data-quantity="{{ line.quantity }}" name="quantity" class="browser-default">
+                                    <select data-id="{{ line.id }}" data-quantity="{{ line.quantity }}" name="quantity" class="browser-default">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -74,14 +74,7 @@
         </div>
     {% endif %}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            optionElts = document.querySelectorAll("option");
-            optionElts.forEach(element => {
-                if (element.value == element.parentNode.dataset.quantity) {
-                        element.selected = true;
-                }
-            });
-        });
-    </script>
+    {% load static %}
+    {% static "" as baseUrl %}
+    <script src="{{ baseUrl}}orders/cart.js"></script>   
 {% endblock %}

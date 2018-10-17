@@ -2,7 +2,7 @@
 
 Pizza ordering service using Django and PostgreSQL. The app is cloud based on Heroku.
 
-[Click here to try it out](https://pizza-shop-na.herokuapp.com/) 
+[Click here to try it out](https://pizza-shop-na.herokuapp.com/) - (Register or use following credentials **username: test** - **password: test**)
 
 ## About
 
@@ -16,14 +16,12 @@ It allows users to:
 * Browse the menu
 * Add pizzas to the cart
 * Browse the cart
+* Change quantity from the cart
 * Delete item from the cart
 * Place an order
 * View past orders
 * Administrator : view all orders and statistics
 
-## Coming Soon
-
-* Changing quantity in the cart via AJAX
 
 ## Built With
 
