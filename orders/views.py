@@ -56,7 +56,7 @@ def order_cart(request):
     order.save()
     cart.save()
 
-    return redirect('cart')
+    return JsonResponse({'url': 'orders'})
 
 # Allows user to browse their cart
 @require_http_methods(['GET', 'POST'])
