@@ -1,6 +1,6 @@
 from datetime import datetime, date, time
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponseForbidden
 from django.urls import reverse
@@ -10,6 +10,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 # Create your views here.
 
@@ -58,6 +60,7 @@ def order_cart(request):
 
 # Allows user to browse their cart
 @login_required(login_url="login")
+@require_http_methods(['GET', 'POST'])
 def cart(request):
     # Get the user's cart, if it doesn't exist, create it
     try:
@@ -65,17 +68,27 @@ def cart(request):
     except Cart.DoesNotExist:
         cart = Cart(user=request.user)
         cart.save()
-    
-    cart_lines = cart.lines.all()
-    cart_total = cart.total()
-    context = {
-        "cart_lines": cart_lines,
-        "cart_total": cart_total
-    }
-    return render(request, "orders/cart.html", context)
+
+    if request.method == "POST":
+        try:
+            cart.add(request.POST['pizza_id'], 1)
+            cart.save()
+            return JsonResponse({"message": "success"})
+        except Cart.error:
+            return JsonResponse({"message": "error"})
+        
+    else:
+        cart_lines = cart.lines.all()
+        cart_total = cart.total()
+        context = {
+            "cart_lines": cart_lines,
+            "cart_total": cart_total
+        }
+        return render(request, "orders/cart.html", context)
 
 # View the menu
 @login_required(login_url="login")
+@ensure_csrf_cookie
 def index(request):
     # Get pizza
     context = {
