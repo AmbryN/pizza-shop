@@ -12,6 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
             await changeQuantityTo(element.dataset.id, element.options[element.selectedIndex].value)
         });
     });
+
+    orderBtn = document.getElementById('order-btn');
+    orderBtn.addEventListener('click', () => {
+        const req = new XMLHttpRequest();
+        const csrfToken = Cookies.get('csrftoken');
+        req.open('GET', '/cart/order');
+        req.setRequestHeader('X-CSRFToken', csrfToken);
+        req.onload = () => {
+            window.location.href = "/cart";
+        }
+        req.send(false);
+    });
 });
 
 async function changeQuantityTo(line_id, quantity) {
