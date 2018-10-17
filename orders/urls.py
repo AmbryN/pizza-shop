@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("cart", views.cart, name="cart"),
-    path("cart/add/<int:pizza_id>", views.add_to_cart, name="cart_add"),
+    path("cart/<int:cart_line_id>", views.update_cart_quantity, name="cart_update"),
     path("cart/delete/<int:cart_line_id>", views.delete_from_cart, name="cart_delete"),
     path("cart/order", views.order_cart, name="cart_order"),
     path("register", views.register, name="register"),

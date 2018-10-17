@@ -54,6 +54,10 @@ class Cart_line(models.Model):
     def add(self, quantity):
         self.quantity += quantity
         self.save()
+    
+    def updateQuantityTo(self, quantity):
+        self.quantity = quantity
+        self.save()
 
 # Defines an order
 class Order(models.Model):

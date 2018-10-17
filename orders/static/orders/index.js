@@ -21,7 +21,7 @@ async function addToCart(pizza_id) {
     req.setRequestHeader('X-CSRFToken', csrfToken);
     req.onload = () => {
         let message = "";
-        let buttonText = "GO TO KART";
+        let buttonText = "GO TO CART";
         let btnHref = "/cart";
         if (req.status == 200){
             let data = req.responseText;
