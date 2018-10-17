@@ -25,11 +25,21 @@ class Cart(models.Model):
         for line in cart_lines:
             total += line.total()
         return round(total, 2)
+
+    def contains(self, pizza):
+        for line in self.lines.all():
+            if pizza == line.pizza:
+                return True
+            else:
+                return False
     
     def add(self, pizza_id, quantity):
-        pizza = Product.objects.get(id=product_id)
-        cart_line = Cart_line(cart=self, pizza=pizza, quantity=quantity)
-        cart_line.save()
+        pizza = Pizza.objects.get(id=pizza_id)
+        if (self.contains(pizza)):
+            cart_line = self.lines.get(pizza=pizza).add(1)
+        else:
+            cart_line = Cart_line(cart=self, pizza=pizza, quantity=quantity)
+            cart_line.save()
 
 
 # Defines a line of a cart, holding product, quantity and toppings information

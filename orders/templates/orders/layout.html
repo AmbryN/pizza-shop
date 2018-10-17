@@ -9,13 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems);
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -79,5 +73,8 @@
     {% block body %}
     {% endblock %}
 
+    {% load static %}
+    {% static "" as baseUrl %}
+    <script src="{{ baseUrl}}orders/layout.js"></script>
 </body>
 </html>
