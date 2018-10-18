@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.db.models import Sum
 from .models import Pizza, Cart, Cart_line, Order
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -67,7 +68,7 @@ def cart(request):
         if request.method == 'POST':
             return JsonResponse({"message": "auth"})
         else:
-            return render(request, "orders/cart.html", context)
+            return render(request, "orders/cart.html")
 
     try:
         cart = Cart.objects.filter(user=request.user).get(is_ordered=False)
@@ -149,7 +150,7 @@ def dashboard(request):
     orders_mean = 0
     for order in orders:
         orders_mean += order.total()
-    orders_mean /= orders_count
+    orders_mean = round(orders_mean / orders_count, 2)
     
     # Get the orders of the day
     today_min = datetime.combine(datetime.today(), time.min)
